@@ -1,0 +1,4 @@
+.env
+latest_entries.json
+__pycache__/
+.vscode
