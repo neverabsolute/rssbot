@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 # Add entry data folder
-RUN mkdir /app/data
+RUN mkdir -p /app/data
 
 # Run the bot when the container launches
 CMD ["python", "main.py"]
