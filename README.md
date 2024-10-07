@@ -4,6 +4,8 @@ A simple bot that fetches RSS feeds and posts them to a Discord channel.
 
 It keeps track of the last post it fetched, so it won't post the same post twice.
 
+It ignores posts that have the text "THIS IS A SCHEDULED EVENT" in the title.
+
 ## Installation
 
 1. Clone the repository
