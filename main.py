@@ -21,7 +21,11 @@ logger = logging.getLogger(__name__)
 # Read environment variables
 TOKEN = os.environ["DISCORD_TOKEN"]
 CHANNEL_ID = int(os.environ["CHANNEL_ID"])
-DB_FILE = "latest_entries.json"
+DB_FILE = "data/latest_entries.json"
+
+# Create data directory if it doesn't exist
+if not os.path.exists("data"):
+    os.makedirs("data")
 
 # Read RSS feeds from a file
 with open("feeds.csv", "r") as f:
