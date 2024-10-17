@@ -117,6 +117,8 @@ async def check_feeds():
             if (
                 "this is a scheduled event"
                 in str((latest_feed_entry.get("title", "") or "")).lower()
+                or "this is a scheduled event"
+                in str((latest_feed_entry.get("description", "") or "")).lower()
             ):
                 logger.info(
                     f"Skipping scheduled event: {latest_feed_entry.get('title', 'No Title')}"

@@ -2,3 +2,4 @@ name,url
 OpenAI,https://status.openai.com/history.rss
 Cloudflare,https://www.cloudflarestatus.com/history.rss
 GCP,https://status.cloud.google.com/en/feed.atom
+Zapier,https://status.zapier.com/history.rss
