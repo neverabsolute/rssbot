@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 
 TARGET_URL = os.environ["WEBHOOK_URL"]
 
