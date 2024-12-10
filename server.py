@@ -2,7 +2,7 @@ import os
 
 import requests
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 load_dotenv()
@@ -23,7 +23,7 @@ async def webhook_relay(request: Request):
     # Check if 'challenge' key is present
     if "challenge" in data:
         # Mirror the entire request body back as the response
-        return Response(data, 200)
+        return JSONResponse(data, 200)
     else:
         # Forward the request data to the target URL
         try:
@@ -31,7 +31,7 @@ async def webhook_relay(request: Request):
             forward_response.raise_for_status()
 
             # Return a simple acknowledgment or the forwarded response if desired
-            return Response(
+            return JSONResponse(
                 {
                     "status": "forwarded",
                     "forwarded_response_code": forward_response.status_code,
@@ -41,7 +41,7 @@ async def webhook_relay(request: Request):
             )
         except requests.RequestException as e:
             # Handle errors if the forward request fails
-            return Response({"error": str(e)}, 500)
+            return JSONResponse({"error": str(e)}, 500)
 
 
 if __name__ == "__main__":
