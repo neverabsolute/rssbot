@@ -27,18 +27,31 @@ async def webhook_relay(request: Request):
     else:
         # Forward the request data to the target URL
         try:
+            print(data)
             # Translate {'event': {'app': 'monday', 'type': 'create_pulse', 'triggerTime': '2024-12-10T19:27:30.740Z', 'subscriptionId': 444297159, 'userId': 55409066, 'originalTriggerUuid': None, 'boardId': 5992933181, 'pulseId': 8023406464, 'pulseName': 'test', 'groupId': 'new_group', 'groupName': 'Infrastructure', 'groupColor': '#c4c4c4', 'isTopGroup': False, 'columnValues': {}, 'triggerUuid': '4012d98ac0d9229542948fba0464c50d'}}
             # to a discord embed format
-            webhook_data = {
-                "embeds": [
-                    {
-                        "title": f"New task in {data['event']['groupName']}",
-                        "url": f"https://monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
-                        "description": f"**{data['event']['pulseName']}**",
-                        "color": int(data["event"]["groupColor"].lstrip("#"), 16),
-                    }
-                ],
-            }
+            if data["event"]["type"] == "create_pulse":
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": f"New task in {data['event']['groupName']}",
+                            "url": f"https://flowdata.monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
+                            "description": f"**{data['event']['pulseName']}**",
+                            "color": int(data["event"]["groupColor"].lstrip("#"), 16),
+                        }
+                    ],
+                }
+            elif data["event"]["type"] == "update_pulse":
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": f"Task updated in {data['event']['groupName']}",
+                            "url": f"https://flowdata.monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
+                            "description": f"**{data['event']['pulseName']}**",
+                            "color": int(data["event"]["groupColor"].lstrip("#"), 16),
+                        }
+                    ],
+                }
             forward_response = requests.post(TARGET_URL, json=webhook_data)
             forward_response.raise_for_status()
 
