@@ -32,7 +32,8 @@ async def webhook_relay(request: Request):
             webhook_data = {
                 "embeds": [
                     {
-                        "title": f"New task in [{data['event']['groupName']}](https://monday.com/boards/{data['event']['boardId']})",
+                        "title": f"New task in {data['event']['groupName']}",
+                        "url": f"https://monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
                         "description": f"**{data['event']['pulseName']}**",
                         "color": int(data["event"]["groupColor"].lstrip("#"), 16),
                     }
