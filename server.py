@@ -41,17 +41,39 @@ async def webhook_relay(request: Request):
                         }
                     ],
                 }
-            elif data["event"]["type"] == "update_pulse":
+            # Translate {'event': {'app': 'monday', 'type': 'update_column_value', 'triggerTime': '2024-12-10T19:37:15.319Z', 'subscriptionId': 444305275, 'userId': 55409066, 'originalTriggerUuid': None, 'boardId': 5992933181, 'groupId': 'new_group', 'pulseId': 8023469949, 'pulseName': 'test', 'columnId': 'status_1', 'columnType': 'color', 'columnTitle': 'Status', 'value': {'label': {'index': 0, 'text': 'Working on it', 'style': {'color': '#fdab3d', 'border': '#e99729', 'var_name': 'orange'}, 'is_done': False}, 'post_id': None}, 'previousValue': None, 'changedAt': 1733859434.833814, 'isTopGroup': False, 'triggerUuid': '82b14043bbd9b1dcb686a747fcdabf0f'}}
+            # to a discord embed format
+            elif data["event"]["type"] == "update_column_value":
                 webhook_data = {
                     "embeds": [
                         {
                             "title": f"Task updated in {data['event']['groupName']}",
                             "url": f"https://flowdata.monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
-                            "description": f"**{data['event']['pulseName']}**",
-                            "color": int(data["event"]["groupColor"].lstrip("#"), 16),
+                            "description": f"Task **{data['event']['pulseName']}** changed to **{data['event']['value']['label']['text']}**",
+                            "color": int(
+                                data["event"]["value"]["label"]["style"][
+                                    "color"
+                                ].lstrip("#"),
+                                16,
+                            ),
                         }
                     ],
                 }
+            # Translate {'event': {'app': 'monday', 'type': 'create_update', 'triggerTime': '2024-12-10T19:40:04.266Z', 'subscriptionId': 444305404, 'userId': 55409066, 'originalTriggerUuid': None, 'boardId': 5992933181, 'pulseId': 8023469949, 'body': '<p>\ufeffsdfg</p>', 'textBody': 'sdfg', 'updateId': 3690127813, 'replyId': None, 'triggerUuid': 'ba09dcd6c8b1b6ec45df0ae891cb1707'}}
+            # to a discord embed format
+            elif data["event"]["type"] == "create_update":
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": f"New update in {data['event']['groupName']}",
+                            "url": f"https://flowdata.monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
+                            "description": f"**{data['event']['pulseName']}** - {data['event']['textBody']}",
+                        }
+                    ],
+                }
+            else:
+                # Ignore other event types
+                return JSONResponse({"status": "ignored"}, 200)
             forward_response = requests.post(TARGET_URL, json=webhook_data)
             forward_response.raise_for_status()
 
