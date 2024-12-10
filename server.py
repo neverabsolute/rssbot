@@ -11,7 +11,10 @@ app = Flask(__name__)
 TARGET_URL = os.environ["WEBHOOK_URL"]
 
 
-@app.route("/webhook", methods=["POST"])
+@app.route(
+    "/zk6785xyJT3A3LenZTBptNLr3IGsv2HeeYmC425ua3WcA4V8agPf6Oqf0PuggovXNmvyFbH2FKGys6WJR0t3K2U9oGUvU94ZgcacDAKbGtrjWTZEJWsV8VGx7JQK929s",
+    methods=["POST"],
+)
 def webhook_relay():
     # Get the incoming JSON data from the request
     data = request.get_json(force=True, silent=True) or {}
