@@ -65,7 +65,7 @@ async def webhook_relay(request: Request):
                 webhook_data = {
                     "embeds": [
                         {
-                            "title": f"New update in {data['event']['groupName']}",
+                            "title": f"New update in monday",
                             "url": f"https://flowdata.monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
                             "description": f"**{data['event']['pulseName']}** - {data['event']['textBody']}",
                         }
