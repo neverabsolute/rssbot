@@ -43,5 +43,6 @@ def webhook_relay():
 
 
 if __name__ == "__main__":
-    # Run the server on localhost:5000 (or change host/port as needed)
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)

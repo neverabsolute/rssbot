@@ -18,5 +18,7 @@ RUN chmod +x /app/entrypoint.sh
 # Add entry data folder
 RUN mkdir -p /app/data
 
+EXPOSE 8000
+
 # Run the bot when the container launches
 CMD ["/app/entrypoint.sh"]
