@@ -138,8 +138,8 @@ async def check_feeds():
 
 
 async def send_entry_to_discord(name: str, entry: dict, channel: TextChannel):
-    title = f'{name} - {entry.get("title", "No Title")}'
-    description = entry.get("description", "No Description")
+    title = f'{name} - {entry.get("title", "No Title")}'[:256]
+    description = entry.get("description", "No Description")[:4096]
     link = entry.get("link", "No Link")
     timestamp = entry.get("pubDate") or entry.get("published") or entry.get("updated")
 
