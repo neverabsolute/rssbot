@@ -27,6 +27,7 @@ async def webhook_relay(request: Request):
     else:
         # Forward the request data to the target URL
         try:
+            print(data)
             forward_response = requests.post(TARGET_URL, json=data)
             forward_response.raise_for_status()
 
