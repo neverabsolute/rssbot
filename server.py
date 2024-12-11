@@ -49,13 +49,7 @@ async def webhook_relay(request: Request):
                         {
                             "title": f"Task updated in monday",
                             "url": f"https://flowdata.monday.com/boards/{data['event']['boardId']}/pulses/{data['event']['pulseId']}",
-                            "description": f"Task **{data['event']['pulseName']}** changed to **{data['event']['value']['label']['text']}**",
-                            "color": int(
-                                data["event"]["value"]["label"]["style"][
-                                    "color"
-                                ].lstrip("#"),
-                                16,
-                            ),
+                            "description": f"Task **{data['event']['pulseName']}** has been updated",
                         }
                     ],
                 }
